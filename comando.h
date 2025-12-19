@@ -16,7 +16,7 @@ typedef struct no_comando no_comando;
 
 void iniciar_fila_de_comando(no_comando **fila);
 void push_fila_de_comando(no_comando **fila, comando comando);
-int ler_linha( FILE *f, no_comando **fila_comando);
+int ler_arquivo( FILE *f, no_comando **fila_comando);
 void validar_comando(comando comando);
 
 

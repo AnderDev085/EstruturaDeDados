@@ -7,8 +7,9 @@ int main(){
     no_comando *fila_comando;
     iniciar_fila_de_comando(&fila_comando);
     FILE *file = fopen("script.txt", "r");
-    ler_linha(file, &fila_comando);
-    printf("Comando lido: %s\n", fila_comando->comando.ordem);
+    ler_arquivo(file, &fila_comando);
+    printf("primeiro comando: %s", fila_comando->comando.ordem);
+    
     fclose(file);
     
 
