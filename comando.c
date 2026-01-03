@@ -39,22 +39,36 @@ void pull_fila_de_comando(no_comando **fila) {
 
 
 
-int ler_linha(FILE *f, no_comando **fila_comando) {
+void ler_arquivo(FILE *f, no_comando **fila_comando) {
+
     int c;
-    comando comando;
-    comando.ordem[0] = '\0';
-    int i = 0;
+    char comando_total[200] = {0};
 
     while ((c = fgetc(f)) != EOF) {
-        comando.ordem[i++] = c;
 
-        if (c == ';') {              // terminou um comando
-            comando.ordem[i] = '\0'; // finaliza string
-            push_fila_de_comando(fila_comando, comando);  // adiciona o comando na fila de comando   
-            return 1;                // comando lido
+        char caractere = (char)c;
+
+        // Separador de comandos
+        if (caractere == '\n' || caractere == ';') {
+
+            if (strlen(comando_total) > 0) {   // evita comandos vazios
+                comando comando_novo;
+                strcpy(comando_novo.ordem, comando_total);
+                push_fila_de_comando(fila_comando, comando_novo);
+            }
+
+            memset(comando_total, 0, sizeof(comando_total)); // zera buffer
+        }
+        else {
+            char tmp[2] = { caractere, '\0' };
+            strcat(comando_total, tmp);
         }
     }
 
-
-    return 0;
+    // se o arquivo NÃO terminar com ; ou \n
+    if (strlen(comando_total) > 0) {
+        comando comando_novo;
+        strcpy(comando_novo.ordem, comando_total);
+        push_fila_de_comando(fila_comando, comando_novo);
+    }
 }
