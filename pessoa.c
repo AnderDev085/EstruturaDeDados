@@ -67,7 +67,7 @@ NoPessoa *buscar_pessoa(NoPessoa **inicio,int codigo_alvo) {
     return NULL;
 }
 
-int alterar_pessoa(NoPessoa **inicio,int codigo_alvo,char *nome,char fone[100], char data_de_nascimento[11],char endereco[100]) {
+int alterar_pessoa(NoPessoa **inicio,int codigo_alvo,char nome[100],char fone[100], char data_de_nascimento[11],char endereco[100]) {
     NoPessoa *aux = buscar_pessoa(inicio,codigo_alvo);
 
     if (aux == NULL) {
@@ -77,7 +77,7 @@ int alterar_pessoa(NoPessoa **inicio,int codigo_alvo,char *nome,char fone[100], 
 
     strcpy(aux->dados.nome , nome);
     strcpy(aux->dados.fone , fone);
-    return;
+    return 1;
 
 }
 

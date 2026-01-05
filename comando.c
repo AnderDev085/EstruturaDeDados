@@ -49,7 +49,7 @@ void ler_arquivo(FILE *f, no_comando **fila_comando) {
         char caractere = (char)c;
 
         // Separador de comandos
-        if (caractere == '\n' || caractere == ';') {
+        if (caractere == ';') {
 
             if (strlen(comando_total) > 0) {   // evita comandos vazios
                 comando comando_novo;
@@ -60,8 +60,10 @@ void ler_arquivo(FILE *f, no_comando **fila_comando) {
             memset(comando_total, 0, sizeof(comando_total)); // zera buffer
         }
         else {
-            char tmp[2] = { caractere, '\0' };
-            strcat(comando_total, tmp);
+            if(caractere != '\n'){
+                char tmp[2] = { caractere, '\0' };
+                strcat(comando_total, tmp);
+            }
         }
     }
 
