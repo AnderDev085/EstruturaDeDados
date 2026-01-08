@@ -1,6 +1,2 @@
-select * from tipo_pet where codigo = 7;
-update pessoa set nome = 'joao a', fone = 'q89796', data_nascimento = '0/0/0', endereco = 'qwe qwe' where codigo = 1;
-delete from pessoa where endereco = 'asd';
-insert into pessoa(codigo, nome, fone, data_nascimento, endereco) values(1,'joa o','859995566','04/06/2006','tua pinto');
-insert into pet(codigo, codigo_pes, nome, codigo_tipo) values(1, 1,'bilu', 2);
-insert into tipo_pet(codigo, descricao) values(1,'cachorro');
+insert into tipo_pet(codigo, descricao) values(1, ‘cachorro’);
+insert into tipo_pet(codigo, descricao) values(2, ‘gato’);

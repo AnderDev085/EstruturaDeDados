@@ -63,6 +63,151 @@ NoPet *buscar_pet(NoPet *inicio, int codigo_alvo) {
     return NULL;
 }
 
+int validar_pet(Pet pet) {
+    if (pet.codigo <= 0) {
+        return 0;
+    }
+
+    if (pet.codigo_pes <= 0) {
+        return 0;
+    }
+
+    if (strlen(pet.nome) == 0) {
+        return 0;
+    }
+
+    if (pet.codigo_tipo <= 0) {
+        return 0;
+    }
+
+    return 1;
+}
+
+int codigo_pet_existe(NoPet *inicio, int codigo) {
+    return (buscar_pet(inicio, codigo) != NULL);
+}
+
+int pessoa_tem_pets(NoPet *inicio, int codigo_pessoa) {
+    NoPet *aux = inicio;
+    while (aux != NULL) {
+        if (aux->dados.codigo_pes == codigo_pessoa) {
+            return 1;
+        }
+        aux = aux->prox;
+    }
+    return 0;
+}
+
+NoArvorePet* inserir_pet_na_arvore_por_nome(NoArvorePet *raiz, Pet pet) {
+    if (raiz == NULL) {
+        NoArvorePet *novo = (NoArvorePet*)malloc(sizeof(NoArvorePet));
+        if (novo == NULL) {
+            printf("Erro ao alocar memória para árvore\n");
+            return NULL;
+        }
+        novo->dados = pet;
+        novo->esquerda = NULL;
+        novo->direita = NULL;
+        return novo;
+    }
+
+    int comparacao = strcmp(pet.nome, raiz->dados.nome);
+
+    if (comparacao < 0) {
+        raiz->esquerda = inserir_pet_na_arvore_por_nome(raiz->esquerda, pet);
+    } else {
+        raiz->direita = inserir_pet_na_arvore_por_nome(raiz->direita, pet);
+    }
+
+    return raiz;
+}
+
+NoArvorePet* construir_arvore_pet_por_nome(NoPet *inicio) {
+    NoArvorePet *raiz = NULL;
+    NoPet *atual = inicio;
+
+    while (atual != NULL) {
+        raiz = inserir_pet_na_arvore_por_nome(raiz, atual->dados);
+        atual = atual->prox;
+    }
+
+    return raiz;
+}
+
+void percorrer_em_ordem_pet(NoArvorePet *raiz) {
+    if (raiz != NULL) {
+        percorrer_em_ordem_pet(raiz->esquerda);
+        imprimir_pet(raiz->dados);
+        percorrer_em_ordem_pet(raiz->direita);
+    }
+}
+
+void liberar_arvore_pet(NoArvorePet *raiz) {
+    if (raiz != NULL) {
+        liberar_arvore_pet(raiz->esquerda);
+        liberar_arvore_pet(raiz->direita);
+        free(raiz);
+    }
+}
+
+void listar_pets_por_nome(NoPet *inicio) {
+    if (inicio == NULL) {
+        printf("Lista vazia.\n");
+        return;
+    }
+
+    printf("\n Pets Ordenados por Nome \n");
+
+    NoArvorePet *arvore = construir_arvore_pet_por_nome(inicio);
+    percorrer_em_ordem_pet(arvore);
+    liberar_arvore_pet(arvore);
+}
+
+int alterar_pet(NoPet *inicio, int codigo_alvo, int *codigo_pes, char *nome, int *codigo_tipo) {
+    NoPet *no = buscar_pet(inicio, codigo_alvo);
+
+    if (no == NULL) {
+        return 0;
+    }
+
+    if (codigo_pes != NULL) {
+        no->dados.codigo_pes = *codigo_pes;
+    }
+
+    if (nome != NULL) {
+        strncpy(no->dados.nome, nome, 99);
+        no->dados.nome[99] = '\0';
+    }
+
+    if (codigo_tipo != NULL) {
+        no->dados.codigo_tipo = *codigo_tipo;
+    }
+
+    return 1; // Sucesso
+}
+
+void imprimir_pet(Pet pet) {
+    printf("Código: %d\n", pet.codigo);
+    printf("Código Pessoa (Dono): %d\n", pet.codigo_pes);
+    printf("Nome: %s\n", pet.nome);
+    printf("Código Tipo: %d\n", pet.codigo_tipo);
+}
+
+void listar_pets(NoPet *inicio) {
+    if (inicio == NULL) {
+        printf("Lista vazia.\n");
+        return;
+    }
+
+    NoPet *aux = inicio;
+    while (aux != NULL) {
+        imprimir_pet(aux->dados);
+        aux = aux->prox;
+    }
+}
+
+
+
 void salvar_arquivo_pet(NoPet *inicio) {
     FILE *arq = fopen("pet.bin", "wb");
     if (!arq) {
