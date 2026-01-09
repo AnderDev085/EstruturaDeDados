@@ -93,9 +93,6 @@ int validar_tipo_pet(TipoPet tipoPet) {
     return 1;
 }
 
-
-
-
 int codigo_tipo_pet_existe(NoTipoPet *inicio, int codigo) {
     return (buscar_tipo_pet(inicio, codigo) != NULL);
 }
@@ -165,8 +162,6 @@ void listar_tipos_pet_por_descricao(NoTipoPet *inicio) {
     liberar_arvore_tipo(arvore);
 }
 
-
-
 void liberar_lista_tipo_pet(NoTipoPet **inicio) {
     NoTipoPet *aux = *inicio;
     NoTipoPet *temp;
@@ -185,7 +180,6 @@ void imprimir_tipo_pet(TipoPet tipoPet) {
     printf("Código: %d\n", tipoPet.codigo);
     printf("Descrição: %s\n", tipoPet.descricao);
 }
-
 
 void listar_tipos_pet(NoTipoPet *inicio) {
     if (inicio == NULL) {
