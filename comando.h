@@ -45,7 +45,7 @@ void validar_fila_comando(no_comando **fila);
 void despachar_fila_comando(no_comando **fila_comando, no_comando **fpet, no_comando **ftipo, no_comando **fpessoa);
 void extrair_valores(char ordem[200], valores *valores);
 void executar_fila_comando_pessoa(no_comando **fila_comando_pessoa, NoPessoa **fila_pessoa,NoPet *Lista_pet, valores *valores);
-
-
+void executar_fila_comando_pet(no_comando **fila, NoPet **lista_pet, NoPessoa *lista_pessoa, NoTipoPet *lista_tipo, valores *v);
+void executar_fila_comando_tipo(no_comando **fila, NoTipoPet **lista_tipo, NoPet *lista_pet, valores *v);
 
 #endif

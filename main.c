@@ -24,8 +24,12 @@ int main(){
     carregar_arquivo_pessoa(&fila_pessoa);
     
     despachar_fila_comando(&fila_comando, &fila_comando_pet, &fila_comando_tipo_pet, &fila_comando_pessoa);
-    
-    executar_fila_comando_pessoa(&fila_comando_pessoa, &fila_pessoa, fila_pet, &valores);
+
+    executar_fila_comando_tipo(&fila_comando_tipo_pet, &fila_tipo_pet,fila_pet,&valores);
+
+    executar_fila_comando_pessoa(&fila_comando_pessoa,&fila_pessoa,fila_pet,&valores);
+
+    executar_fila_comando_pet(&fila_comando_pet, &fila_pet, fila_pessoa, fila_tipo_pet, &valores);
 
     salvar_arquivo_pessoa(fila_pessoa);
     liberar_lista_pessoa(&fila_pessoa);

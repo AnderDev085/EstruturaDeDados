@@ -928,5 +928,86 @@ void executar_fila_comando_pessoa(no_comando **fila_comando_pessoa, NoPessoa **f
     }
 }
 
+void executar_fila_comando_pet(no_comando **fila, NoPet **lista_pet, NoPessoa *lista_pessoa, NoTipoPet *lista_tipo, valores *v) {
+    no_comando *aux = *fila;
+    
+    while(aux != NULL){
+        inicializar_valores(v);
+        extrair_valores(aux->ordem, v);
+        char acao = verificar_tipo_comando(aux->ordem);
 
+        if(acao == 'I') {
+            Pet p;
+            p.codigo = v->codigo;
+            p.codigo_pes = v->codigo_pes;
+            p.codigo_tipo = v->codigo_tipo;
+            strcpy(p.nome, v->nome);
+
+            // Requisito: Validação de FK e Unicidade [cite: 52, 53, 54]
+            if(pode_inserir_pet(lista_pessoa, lista_tipo, *lista_pet, p)) {
+                inserir_pet(lista_pet, p);
+                printf("Pet %s inserido com sucesso.\n", p.nome);
+            }
+        }
+        else if(acao == 'D') {
+            if(remover_pet(lista_pet, v->codigo))
+                printf("Pet removido.\n");
+            else
+                printf("Erro ao remover pet.\n");
+        }
+        else if(acao == 'U') {
+             // Requisito: Validação na alteração [cite: 57]
+             if(pode_alterar_pet(lista_pessoa, lista_tipo, *lista_pet, v->codigo, &v->codigo_pes, &v->codigo_tipo)) {
+                 alterar_pet(*lista_pet, v->codigo,v->codigo_pes,v->nome,v->codigo_tipo); // Atualize pet.c para receber 'valores*'
+                 printf("Pet atualizado.\n");
+             }
+        }
+        else if(acao == 'S') {
+            if (v->order == 1) {
+                listar_pets_por_nome(*lista_pet);
+            } else {
+                listar_pets(*lista_pet); // Implemente select com filtros se desejar
+            }
+        }
+        aux = aux->prox;
+    }
+    esvaziar_fila_de_comando(fila);
+}
+
+void executar_fila_comando_tipo(no_comando **fila, NoTipoPet **lista_tipo, NoPet *lista_pet, valores *v) {
+    no_comando *aux = *fila;
+    while(aux != NULL){
+        inicializar_valores(v);
+        extrair_valores(aux->ordem, v);
+        char acao = verificar_tipo_comando(aux->ordem);
+
+        if(acao == 'I') {
+            if(!codigo_tipo_pet_existe(*lista_tipo, v->codigo)) { // Requisito: Unicidade [cite: 52]
+                TipoPet tp;
+                tp.codigo = v->codigo;
+                strcpy(tp.descricao, v->descricao);
+                inserir_tipo_pet(lista_tipo, tp);
+                printf("Tipo inserido.\n");
+            } else {
+                printf("Erro: Código de Tipo já existe.\n");
+            }
+        }
+        else if(acao == 'D') {
             
+            remover_tipo_pet(lista_tipo, v->codigo);
+        }
+        else if(acao =='U'){
+
+            alterar_tipo_pet(*lista_tipo,v->codigo,v->descricao);
+
+        }
+        else if(acao == 'S'){
+            NoTipoPet *imprimir = *lista_tipo;
+            imprimir_tipo_pet(imprimir->dados);
+
+        }
+        aux = aux->prox;
+    }
+    esvaziar_fila_de_comando(fila);
+}
+        

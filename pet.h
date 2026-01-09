@@ -29,7 +29,7 @@ NoPet *buscar_pet(NoPet *inicio, int codigo_alvo);
 
 int validar_pet(Pet pet);
 
-int alterar_pet(NoPet *inicio, int codigo_alvo, int *codigo_pes, char *nome, int *codigo_tipo);
+int alterar_pet(NoPet *inicio, int codigo_alvo, int codigo_pes, char *nome, int codigo_tipo);
 
 int codigo_pet_existe(NoPet *inicio, int codigo);
 

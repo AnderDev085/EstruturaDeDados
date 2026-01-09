@@ -168,15 +168,15 @@ void listar_pets_por_nome(NoPet *inicio) {
     liberar_arvore_pet(arvore);
 }
 
-int alterar_pet(NoPet *inicio, int codigo_alvo, int *codigo_pes, char *nome, int *codigo_tipo) {
+int alterar_pet(NoPet *inicio, int codigo_alvo, int codigo_pes, char *nome, int codigo_tipo) {
     NoPet *no = buscar_pet(inicio, codigo_alvo);
 
     if (no == NULL) {
         return 0;
     }
 
-    if (codigo_pes != NULL) {
-        no->dados.codigo_pes = *codigo_pes;
+    if (codigo_pes != 0) {
+        no->dados.codigo_pes = codigo_pes;
     }
 
     if (nome != NULL) {
@@ -184,8 +184,8 @@ int alterar_pet(NoPet *inicio, int codigo_alvo, int *codigo_pes, char *nome, int
         no->dados.nome[99] = '\0';
     }
 
-    if (codigo_tipo != NULL) {
-        no->dados.codigo_tipo = *codigo_tipo;
+    if (codigo_tipo != 0) {
+        no->dados.codigo_tipo = codigo_tipo;
     }
 
     return 1; // Sucesso
@@ -241,5 +241,4 @@ void carregar_arquivo_pet(NoPet **inicio) {
     }
     fclose(arq);
 }
-
 
