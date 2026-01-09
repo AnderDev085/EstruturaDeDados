@@ -1,7 +1,12 @@
 #ifndef TIPO_PET_H
 #define TIPO_PET_H
 
-typedef struct {
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
+#include "comando.h"
+
+typedef struct TipoPet{
     int codigo;
     char descricao[100];
 }TipoPet;
@@ -41,8 +46,6 @@ void liberar_arvore_tipo(NoArvoreTipoPet *raiz);
 void salvar_arquivo_tipo_pet(NoTipoPet *inicio);
 
 void carregar_arquivo_tipo_pet(NoTipoPet **inicio);
-
-
 
 int validar_tipo_pet(TipoPet tipoPet);
 

@@ -1,7 +1,7 @@
 #ifndef PET_H
 #define PET_H
 
-typedef struct {
+typedef struct Pet{
     int codigo;
     int codigo_pes;
     int codigo_tipo;
@@ -41,7 +41,6 @@ int pessoa_tem_pets(NoPet *inicio, int codigo_pessoa);
 
 void listar_pets_por_nome(NoPet *inicio);
 
-
 NoArvorePet* construir_arvore_pet_por_nome(NoPet *inicio);
 
 NoArvorePet* inserir_pet_na_arvore_por_nome(NoArvorePet *raiz, Pet pet);
@@ -53,8 +52,5 @@ void liberar_arvore_pet(NoArvorePet *raiz);
 void salvar_arquivo_pet(NoPet *inicio);
 
 void carregar_arquivo_pet(NoPet **inicio);
-
-
-
 
 #endif

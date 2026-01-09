@@ -1,6 +1,11 @@
 #ifndef PESSOA_H
 #define PESSOA_H
 
+#include "validacoes.h"
+#include "pet.h"
+#include "tipo_pet.h"
+#include "comando.h"
+
 typedef struct {
     int codigo;
     char nome[100];
@@ -21,13 +26,13 @@ typedef struct NoArvorePessoa {
     struct NoArvorePessoa *esquerda;
 }NoArvorePessoa;
 
-void inserir_pessoa(NoPessoa **inicio,Pessoa novaPessoa);
+void inserir_pessoa(NoPessoa **inicio,valores *valores);
 
-int remover_pessoa(NoPessoa **inicio,int codigo_alvo);
+int remover_pessoa(NoPessoa **inicio, NoPet **ListaPets,int codigo_alvo);
 
 NoPessoa *buscar_pessoa(NoPessoa *inicio,int codigo_alvo);
 
-int alterar_pessoa(NoPessoa *inicio, int codigo_alvo, char *nome, char *fone, char *data_nascimento, char *endereco);
+int alterar_pessoa(NoPessoa *inicio, valores *valores);
 
 void liberar_lista_pessoa(NoPessoa **inicio);
 
@@ -53,6 +58,11 @@ int codigo_pessoa_existe(NoPessoa *inicio, int codigo);
 void salvar_arquivo_pessoa(NoPessoa *inicio);
 
 void carregar_arquivo_pessoa(NoPessoa **inicio);
+
+void imprimir_pessoa_select(NoPessoa **fila_pessoa, valores *valores);
+
+void inserir_pessoa_dados(NoPessoa **inicio, Pessoa pessoa);
+
 
 
 

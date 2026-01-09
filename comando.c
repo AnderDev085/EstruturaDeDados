@@ -1,7 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
+#include "tipo_pet.h"
 #include "comando.h"
+
+void inicializar_valores(valores *v) {
+    strcpy(v->tipo, "");
+    strcpy(v->tabela, "");
+    v->order = 0;
+    v->codigo = 0;
+    v->codigo_pes = 0;
+    v->codigo_tipo = 0;
+    strcpy(v->nome, "");
+    strcpy(v->fone, "");
+    strcpy(v->data_nascimento, "");
+    strcpy(v->endereco, "");
+    strcpy(v->descricao, "");
+}
 
 void adicionar_fila_de_comando(no_comando **fila, char ordem[200]){
     no_comando *aux = malloc(sizeof(no_comando));
@@ -626,7 +644,19 @@ void despachar_fila_comando(no_comando **fila_comando, no_comando **fila_comando
     esvaziar_fila_de_comando(fila_comando);
 }
 
-void extrair_valores(char ordem[200], Valores *valores){
+char verificar_tipo_comando(char ordem[200]){
+    if(strstr(ordem,"insert")!=NULL)return 'I';
+
+    if(strstr(ordem,"delete")!=NULL)return 'D';
+
+    if(strstr(ordem,"update")!=NULL)return 'U';
+
+    if(strstr(ordem,"select")!=NULL)return 'S';
+
+    return 'E';
+}
+
+void extrair_valores(char ordem[200], valores *valores){
     char copia[200];
     strcpy(copia,ordem);
 
@@ -866,6 +896,35 @@ void extrair_valores(char ordem[200], Valores *valores){
 
             }
         }
+    }
+}
+
+void executar_fila_comando_pessoa(no_comando **fila_comando_pessoa, NoPessoa **fila_pessoa,NoPet *Lista_pet, valores *valores){
+    no_comando *aux = *fila_comando_pessoa;
+    
+
+    while(aux != NULL){
+        inicializar_valores(valores);
+        extrair_valores(aux->ordem, valores);
+        char tipo = verificar_tipo_comando(aux->ordem);
+
+        if(tipo == 'I'){inserir_pessoa(fila_pessoa, valores);}
+
+        else if(tipo == 'D'){remover_pessoa(fila_pessoa,&Lista_pet,valores->codigo);}
+
+        else if(tipo == 'U'){alterar_pessoa(*fila_pessoa, valores);}
+
+        else if(tipo == 'S' && valores->order == 0){imprimir_pessoa_select(fila_pessoa,valores);}
+
+        else if(tipo == 'S' && valores->order == 1){
+            NoArvorePessoa *arvore = construir_arvore_por_nome(*fila_pessoa);
+            percorrer_em_ordem_pessoa(arvore);
+            liberar_arvore_pessoa(arvore);
+        }
+
+        aux= aux->prox;
+
+
     }
 }
 

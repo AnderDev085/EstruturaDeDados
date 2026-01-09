@@ -2,6 +2,10 @@
 #define COMANDO_H
 #include <stdio.h>
 
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
+#include "tipo_pet.h"
 
 struct no_comando{
     char ordem[200];
@@ -9,7 +13,7 @@ struct no_comando{
     struct no_comando *ant;
 };
 
-typedef struct {
+struct valores{
     char tipo[7];       
     char tabela[12];
     int order;     
@@ -22,11 +26,12 @@ typedef struct {
     char endereco[200];
     char descricao[200];
 
-} Valores;
+};
 
-
+typedef struct valores valores;
 typedef struct no_comando no_comando;
 
+void inicializar_valores(valores *valores);
 void remover_fila_de_comando(no_comando **fila);
 void adicionar_fila_de_comando(no_comando **fila, char ordem[200]);
 void esvaziar_fila_de_comando(no_comando **fila);
@@ -38,7 +43,8 @@ int validar_select(char ordem[200]);
 int validar_comando(no_comando *comando);
 void validar_fila_comando(no_comando **fila);
 void despachar_fila_comando(no_comando **fila_comando, no_comando **fpet, no_comando **ftipo, no_comando **fpessoa);
-void extrair_valores(char ordem[200], Valores *valores);
+void extrair_valores(char ordem[200], valores *valores);
+void executar_fila_comando_pessoa(no_comando **fila_comando_pessoa, NoPessoa **fila_pessoa,NoPet *Lista_pet, valores *valores);
 
 
 

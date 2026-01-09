@@ -1,13 +1,9 @@
-//
-// Created by gmllb on 06/01/2026.
-//
-
-
 #include <stdio.h>
 #include "validacoes.h"
 #include "pessoa.h"
 #include "pet.h"
 #include "tipo_pet.h"
+#include "comando.h"
 
 
 int pode_remover_pessoa(NoPessoa *lista_pessoas, NoPet *lista_pets, int codigo_pessoa) {

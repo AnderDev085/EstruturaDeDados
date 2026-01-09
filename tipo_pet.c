@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
 #include "tipo_pet.h"
+#include "comando.h"
 
 void inserir_tipo_pet(NoTipoPet **inicio, TipoPet novoTipoPet) {
     NoTipoPet *aux = (NoTipoPet*)malloc(sizeof(NoTipoPet));

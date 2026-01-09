@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
+#include "tipo_pet.h"
 #include "comando.h"
 
 
@@ -8,21 +12,23 @@ int main(){
     no_comando *fila_comando_pet = NULL;
     no_comando *fila_comando_pessoa = NULL;
     no_comando *fila_comando_tipo_pet = NULL;
-    Valores valores;
+    NoPessoa *fila_pessoa = NULL;
+    NoTipoPet *fila_tipo_pet = NULL;
+    NoPet *fila_pet = NULL;
+    valores valores;
+    inicializar_valores(&valores);
     FILE *file = fopen("script.txt", "r");
     ler_arquivo(file,&fila_comando);
     validar_fila_comando(&fila_comando);
-    extrair_valores(fila_comando->ordem, &valores);
-    printf("%s\n", fila_comando->ordem);
-    printf("%s\n", valores.tabela);
-    printf("%s\n", valores.nome);
-    printf("%s\n", valores.fone);
-    printf("%s\n", valores.data_nascimento);
-    printf("%s\n", valores.endereco);
-    printf("%s\n", valores.descricao);
-    printf("%d\n", valores.codigo);
-    printf("%d\n", valores.codigo_pes);
-    printf("%d\n", valores.codigo_tipo);
+
+    carregar_arquivo_pessoa(&fila_pessoa);
+    
+    despachar_fila_comando(&fila_comando, &fila_comando_pet, &fila_comando_tipo_pet, &fila_comando_pessoa);
+    
+    executar_fila_comando_pessoa(&fila_comando_pessoa, &fila_pessoa, fila_pet, &valores);
+
+    salvar_arquivo_pessoa(fila_pessoa);
+    liberar_lista_pessoa(&fila_pessoa);
 
 
 

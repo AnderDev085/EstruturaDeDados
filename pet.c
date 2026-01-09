@@ -4,6 +4,11 @@
 
 #include <stdio.h>
 #include "pet.h"
+#include "validacoes.h"
+#include "pessoa.h"
+#include "pet.h"
+#include "tipo_pet.h"
+#include "comando.h"
 #include <stdlib.h>
 #include <string.h>
 
